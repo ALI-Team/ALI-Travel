@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ALI-Travel</string>
+    <string name="action_settings">Settings</string>
+    <string name="add_favorites">Add a favorite route</string>
+</resources>
