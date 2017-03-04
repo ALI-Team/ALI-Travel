@@ -62,4 +62,15 @@
         android:drawableRight="@drawable/ic_search_black_24dp"
         android:text="@string/search" />
 
+    <Button
+        android:id="@+id/nearme"
+        style="@style/AppTheme.PrimaryColorButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toTFLayout"
+        android:layout_toStartOf="@+id/search"
+        android:text="@string/near_me"
+        android:textColor="@color/colorBlackPrimaryText"
+        android:drawableRight="@drawable/ic_near_me_black_24dp"/>
+
 </RelativeLayout>

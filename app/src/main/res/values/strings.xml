@@ -6,4 +6,5 @@
     <string name="search">Search</string>
     <string name="destination">Destination</string>
     <string name="departure">Departure</string>
+    <string name="near_me">Near Me</string>
 </resources>
