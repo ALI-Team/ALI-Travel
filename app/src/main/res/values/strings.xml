@@ -7,4 +7,6 @@
     <string name="destination">Destination</string>
     <string name="departure">Departure</string>
     <string name="near_me">Near Me</string>
+    <string name="modes_of_transport">Modes of Transport</string>
+    <string name="choose">Choose</string>
 </resources>
