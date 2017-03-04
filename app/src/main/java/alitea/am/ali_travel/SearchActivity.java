@@ -1,6 +1,7 @@
 package alitea.am.ali_travel;
 
 import android.content.res.ColorStateList;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -58,8 +59,10 @@ public class SearchActivity extends AppCompatActivity {
                         }
                     })
                     .positiveText(R.string.choose)
-                    .positiveColor(getResources().getColor(R.color.colorPrimary))
-                    .choiceWidgetColor(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)))
+                    .positiveColor(ContextCompat.getColor(this, R.color.colorPrimary))
+                    .negativeText(android.R.string.cancel)
+                    .negativeColor(ContextCompat.getColor(this, R.color.colorPrimary))
+                    .choiceWidgetColor(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorPrimary)))
                     .show();
         }
 
