@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="transport_types">
+        <item>Plane</item>
+        <item>Express Train</item>
+        <item>Train</item>
+        <item>Express Bus</item>
+        <item>Local Train</item>
+        <item>Subway</item>
+        <item>Tram</item>
+        <item>Bus</item>
+        <item>Boat</item>
+        <item>Taxi</item>
+    </string-array>
+</resources>
