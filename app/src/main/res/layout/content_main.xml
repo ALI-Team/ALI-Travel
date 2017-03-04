@@ -18,6 +18,7 @@
         android:theme="@style/AppTheme.PrimaryColorButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/add_favorites" />
+        android:text="@string/add_favorites"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

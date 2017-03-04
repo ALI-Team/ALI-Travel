@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/fromTFLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout" >
+
+        <EditText
+            android:id="@+id/fromTF"
+            android:theme="@style/AppTheme.PrimaryEditTextColor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/departure"
+            android:inputType="textPersonName" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/toTFLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fromTFLayout"
+        app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout" >
+
+        <EditText
+            android:id="@+id/toTF"
+            android:theme="@style/AppTheme.PrimaryEditTextColor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/destination"
+            android:inputType="textPersonName" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/swap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toTFLayout"
+        android:text="@string/swap" />
+
+    <Button
+        android:id="@+id/search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/toTFLayout"
+        android:text="@string/search" />
+
+</RelativeLayout>
