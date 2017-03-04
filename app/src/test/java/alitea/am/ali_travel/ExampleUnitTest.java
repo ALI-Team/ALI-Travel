@@ -1,6 +1,10 @@
 package alitea.am.ali_travel;
 
+import android.util.Log;
+
 import org.junit.Test;
+
+import alitea.am.ali_travel.api_wrapper.Stop;
 
 import static org.junit.Assert.*;
 
@@ -13,5 +17,12 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
+    }
+
+    @Test
+    public void testStopProducts() {
+        for(Stop.TrafikSlag trafikSlag : Stop.TrafikSlag.getModes(9)) {
+            System.out.println(trafikSlag.name());
+        }
     }
 }
