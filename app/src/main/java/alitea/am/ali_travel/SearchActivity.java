@@ -43,6 +43,7 @@ public class SearchActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.modes_of_transport) {
             new MaterialDialog.Builder(this)
+                    .alwaysCallMultiChoiceCallback()
                     .title(R.string.modes_of_transport)
                     .items(R.array.transport_types)
                     .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
