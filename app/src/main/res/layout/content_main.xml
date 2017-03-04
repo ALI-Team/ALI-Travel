@@ -15,7 +15,7 @@
     tools:context="alitea.am.ali_travel.MainActivity">
 
     <Button
-        style="@style/AppTheme.PrimaryColorButton"
+        android:theme="@style/AppTheme.PrimaryColorButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
