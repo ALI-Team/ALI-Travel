@@ -8,3 +8,4 @@
 /build
 /captures
 .externalNativeBuild
+/app/src/main/java/alitea/am/ali_travel/api_wrapper/APIKeyHolder.java
