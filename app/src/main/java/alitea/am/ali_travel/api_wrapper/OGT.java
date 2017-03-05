@@ -10,4 +10,8 @@ public abstract class OGT {
     public static PlatsUppslagRequest.Builder platsUppslag(Context ctx) {
         return new PlatsUppslagRequest.Builder(ctx);
     }
+
+    public static ResePlanerareRequest.Builder resePlanerare(Context ctx) {
+        return new ResePlanerareRequest.Builder(ctx);
+    }
 }

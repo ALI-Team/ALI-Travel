@@ -21,6 +21,7 @@ public enum TrafikSlag {
 
     private int num;
     public static EnumSet<TrafikSlag> all = EnumSet.allOf(TrafikSlag.class);
+    public static int allInt = getProducts(all);
 
     TrafikSlag(int num) {
         this.num = num;
@@ -42,6 +43,14 @@ public enum TrafikSlag {
             }
         }
         return enumSet;
+    }
+
+    public static int getProducts(EnumSet<TrafikSlag> modes) {
+        int products = 0;
+        for(TrafikSlag ts : modes) {
+            products += ts.getNum();
+        }
+        return products;
     }
 
 }
