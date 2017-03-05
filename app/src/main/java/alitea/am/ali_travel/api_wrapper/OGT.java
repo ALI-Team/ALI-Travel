@@ -2,6 +2,9 @@ package alitea.am.ali_travel.api_wrapper;
 
 import android.content.Context;
 
+import alitea.am.ali_travel.api_wrapper.plats_uppslag.PlatsUppslagRequest;
+import alitea.am.ali_travel.api_wrapper.rese_planerare.ResePlanerareRequest;
+
 /**
  * Created by axel on 04/03/17.
  */
