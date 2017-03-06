@@ -37,6 +37,8 @@ public class SearchActivity extends AppCompatActivity {
 
         swapButton.setOnClickListener(
                 new View.OnClickListener(){
+                    /* runs when the swap-button is clicked,
+                       switches the two input fields' text. */
                     public void onClick(View view){
                         String departure = String.valueOf(fromTF.getText());
                         String arrival = String.valueOf(toTF.getText());
