@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -89,9 +90,8 @@ public class SearchActivity extends AppCompatActivity {
             case R.id.departure_date_radio:
                 if (checked) {
 
-                    RadioButton arrival = (RadioButton)findViewById(R.id.arrival_date_radio);
+                    final RadioButton arrival = (RadioButton)findViewById(R.id.arrival_date_radio);
                     arrival.setChecked(false);
-                    arrival.setText(getString(R.string.arrival_date));
 
                     final int mYear, mMonth, mDay, mHour, mMinute;
                     final Calendar c = Calendar.getInstance();
@@ -110,6 +110,7 @@ public class SearchActivity extends AppCompatActivity {
                             TimePickerDialog time = new TimePickerDialog(that, new TimePickerDialog.OnTimeSetListener() {
                                 @Override
                                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                    arrival.setText(getString(R.string.arrival_date));
                                     rbutton.setText(getString(R.string.departure_date)+" - "+month+"/"+dayOfMonth+" "+hourOfDay+":"+minute);
                                 }
                             }, mHour, mMinute, false);
@@ -117,6 +118,9 @@ public class SearchActivity extends AppCompatActivity {
                             time.setButton(DialogInterface.BUTTON_NEGATIVE, getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     if (which == DialogInterface.BUTTON_NEGATIVE) {
+                                        if (arrival.getText() != (String)getString(R.string.arrival_date)) {
+                                            arrival.setChecked(true);
+                                        }
                                         rbutton.setChecked(false);
                                     }
                                 }
@@ -139,9 +143,8 @@ public class SearchActivity extends AppCompatActivity {
                 break;
             case R.id.arrival_date_radio:
                 if (checked) {
-                    RadioButton departure = (RadioButton)findViewById(R.id.departure_date_radio);
+                    final RadioButton departure = (RadioButton)findViewById(R.id.departure_date_radio);
                     departure.setChecked(false);
-                    departure.setText(getString(R.string.departure_date));
 
                     final int mYear, mMonth, mDay, mHour, mMinute;
                     final Calendar c = Calendar.getInstance();
@@ -160,6 +163,7 @@ public class SearchActivity extends AppCompatActivity {
                             TimePickerDialog time = new TimePickerDialog(that, new TimePickerDialog.OnTimeSetListener() {
                                 @Override
                                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                    departure.setText(getString(R.string.departure_date));
                                     rbutton.setText(getString(R.string.arrival_date)+" - "+month+"/"+dayOfMonth+" "+hourOfDay+":"+minute);
                                 }
                             }, mHour, mMinute, false);
@@ -167,6 +171,11 @@ public class SearchActivity extends AppCompatActivity {
                             time.setButton(DialogInterface.BUTTON_NEGATIVE, getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     if (which == DialogInterface.BUTTON_NEGATIVE) {
+                                        Log.e("nigger", (String) departure.getText());
+                                        Log.e("cunt", getString(R.string.departure_date));
+                                        if (departure.getText() != (String)getString(R.string.departure_date)) {
+                                            departure.setChecked(true);
+                                        }
                                         rbutton.setChecked(false);
                                     }
                                 }
