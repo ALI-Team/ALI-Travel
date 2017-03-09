@@ -54,10 +54,10 @@ public class SearchActivity extends AppCompatActivity {
         mHour = c.get(Calendar.HOUR_OF_DAY);
         mMinute = c.get(Calendar.MINUTE);
 
-        DatePickerDialog date = new DatePickerDialog(that, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog date = new DatePickerDialog(that, R.style.DatePickerDialogDarkText, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, final int month, final int dayOfMonth) {
-                TimePickerDialog time = new TimePickerDialog(that, new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog time = new TimePickerDialog(that, R.style.DatePickerDialogDarkText, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                                 /*arrival.setText(getString(R.string.arrival_date));
