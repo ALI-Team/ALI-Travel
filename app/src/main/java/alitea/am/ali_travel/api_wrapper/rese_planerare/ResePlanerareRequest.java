@@ -2,13 +2,23 @@ package alitea.am.ali_travel.api_wrapper.rese_planerare;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 
-import java.text.SimpleDateFormat;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Calendar;
 import java.util.EnumSet;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 
+import alitea.am.ali_travel.api_wrapper.APIError;
 import alitea.am.ali_travel.api_wrapper.APIKeyHolder;
 import alitea.am.ali_travel.api_wrapper.Coordinates;
 import alitea.am.ali_travel.api_wrapper.TrafikSlag;
@@ -21,7 +31,7 @@ import alitea.am.ali_travel.api_wrapper.util.DateFormats;
 
 public class ResePlanerareRequest {
     private String date, time;
-    private String seachForArrival;
+    private String searchForArrival;
     private String originId;
     private String originCoordLat, originCoordLong;
     private String destId;
@@ -51,8 +61,130 @@ public class ResePlanerareRequest {
                 .build();
     }
 
-    public void fetch() {
+    public void fetch(final ResponseHandler rHandler, final ErrorHandler eHandler) {
+        RequestQueue queue = Volley.newRequestQueue(ctx);
+        Uri.Builder uriBuilder = API_ENDPOINT.buildUpon();
 
+        if (this.date != null && !this.date.equals("")) {
+            uriBuilder.appendQueryParameter("date", this.date);
+        }
+
+        if (this.time != null && !this.time.equals("")) {
+            uriBuilder.appendQueryParameter("time", this.time);
+        }
+
+        if (this.searchForArrival != null && !this.searchForArrival.equals("")) {
+            uriBuilder.appendQueryParameter("searchForArrival", this.searchForArrival);
+        }
+
+        if (this.originId != null && !this.originId.equals("")) {
+            uriBuilder.appendQueryParameter("originId", this.originId);
+        }
+
+        if (this.originCoordLat != null && !this.originCoordLat.equals("")) {
+            uriBuilder.appendQueryParameter("originCoordLat", this.originCoordLat);
+        }
+
+        if (this.originCoordLong != null && !this.originCoordLong.equals("")) {
+            uriBuilder.appendQueryParameter("originCoordLong", this.originCoordLong);
+        }
+
+        if (this.destId != null && !this.destId.equals("")) {
+            uriBuilder.appendQueryParameter("destId", this.destId);
+        }
+
+        if (this.destCoordLat != null && !this.destCoordLat.equals("")) {
+            uriBuilder.appendQueryParameter("destCoordLat", this.destCoordLat);
+        }
+
+        if (this.destCoordLong != null && !this.destCoordLong.equals("")) {
+            uriBuilder.appendQueryParameter("destCoordLong", this.destCoordLong);
+        }
+
+        if (this.viaId != null && !this.viaId.equals("")) {
+            uriBuilder.appendQueryParameter("viaId", this.viaId);
+        }
+
+        if (this.numF != null && !this.numF.equals("")) {
+            uriBuilder.appendQueryParameter("numF", this.numF);
+        }
+
+        if (this.numB != null && !this.numB.equals("")) {
+            uriBuilder.appendQueryParameter("numB", this.numB);
+        }
+
+        if (this.context != null && !this.context.equals("")) {
+            uriBuilder.appendQueryParameter("context", this.context);
+        }
+
+        if (this.maxChange != null && !this.maxChange.equals("")) {
+            uriBuilder.appendQueryParameter("maxChange", this.maxChange);
+        }
+
+        if (this.products != null && !this.products.equals("")) {
+            uriBuilder.appendQueryParameter("products", this.products);
+        }
+
+        if (this.operators != null && !this.operators.equals("")) {
+            uriBuilder.appendQueryParameter("operators", this.operators);
+        }
+
+        if (this.passList != null && !this.passList.equals("")) {
+            uriBuilder.appendQueryParameter("passlist", this.passList);
+        }
+
+        if (this.originWalk != null && !this.originWalk.equals("")) {
+            uriBuilder.appendQueryParameter("originWalk", this.originWalk);
+        }
+
+        if (this.destWalk != null && !this.destWalk.equals("")) {
+            uriBuilder.appendQueryParameter("destWalk", this.destWalk);
+        }
+
+
+        String url = uriBuilder.build().toString();
+
+        Log.i("RPR", url);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Log.i("RPR", response.toString(2));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            if (response.has("Trip")) {
+                                rHandler.handleResponse(new ResePlanerareResponse(response));
+                            } else {
+                                eHandler.handleError(new APIError(response.getString("errorCode"),
+                                        response.getString("errorText")));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                }
+        );
+
+        queue.add(jsonObjectRequest);
+    }
+
+    public interface ResponseHandler {
+        void handleResponse(ResePlanerareResponse rpr);
+    }
+
+    public interface ErrorHandler {
+        void handleError(APIError error);
     }
 
     public static class Builder {
@@ -65,10 +197,10 @@ public class ResePlanerareRequest {
         private Coordinates destCoords;
         private boolean hasDest;
         private String viaId;
-        private int numF, numB;
+        private int numF = -1, numB = -1;
         private String context;
         private int maxChange = -1;
-        private int products;
+        private int products = -1;
         private String operators;
         private boolean passList = true;
         private Walk originWalk;
@@ -401,8 +533,8 @@ public class ResePlanerareRequest {
         /**
          * Adds operators to list of operators
          *
-         * @param operator
-         * @return
+         * @param operator to add
+         * @return this
          */
         public ResePlanerareRequest.Builder addOperator(String operator) {
             if (this.operators == null || this.operators.equals("")) {
@@ -446,6 +578,20 @@ public class ResePlanerareRequest {
             return this;
         }
 
+        public void fetch(ResponseHandler rHandler, ErrorHandler eHandler) {
+            try {
+                this.build().fetch(rHandler, eHandler);
+            } catch (ResePlanerareIllegalArgumentsException e) {
+                e.printStackTrace();
+            }
+        }
+
+        /**
+         * Builds and checks input for ResePlanerareRequest
+         *
+         * @return A built ResePlanerareRequest
+         * @throws ResePlanerareIllegalArgumentsException if input is malformed
+         */
         public ResePlanerareRequest build() throws ResePlanerareIllegalArgumentsException {
             ResePlanerareRequest rpr = new ResePlanerareRequest(ctx);
 
@@ -455,7 +601,7 @@ public class ResePlanerareRequest {
             }
 
             if (searchForArrival) {
-                rpr.seachForArrival = "1";
+                rpr.searchForArrival = "1";
             }
 
             if (!hasOrigin || !hasDest) {
@@ -486,10 +632,10 @@ public class ResePlanerareRequest {
             } else {
                 if (numB >= 0) {
                     rpr.numB = Integer.toString(numB);
-                } else throw new IllegalNumRangeException("numB < 0");
+                }
                 if (numF >= 0) {
                     rpr.numF = Integer.toString(numF);
-                } else throw new IllegalNumRangeException("numF < 0");
+                }
             }
 
             if (this.context != null && !this.context.equals("")) {
@@ -504,18 +650,24 @@ public class ResePlanerareRequest {
 
             if (this.products >= 1 && this.products <= TrafikSlag.allInt) {
                 rpr.products = Integer.toString(this.products);
-            } else throw new IllegalProductsException("Products must be in range 1 to " +
-                    Integer.toString(TrafikSlag.allInt));
+            } else if (this.products != -1) {
+                throw new IllegalProductsException("Products must be in range 1 to " +
+                        Integer.toString(TrafikSlag.allInt));
+            }
 
-            if(!this.passList) {
+            if (this.operators != null) {
+                rpr.operators = this.operators;
+            }
+
+            if (!this.passList) {
                 rpr.passList = "0";
             }
 
-            if(this.originWalk != null) {
+            if (this.originWalk != null) {
                 rpr.originWalk = this.originWalk.toString();
             }
 
-            if(this.destWalk != null) {
+            if (this.destWalk != null) {
                 rpr.destWalk = this.destWalk.toString();
             }
 

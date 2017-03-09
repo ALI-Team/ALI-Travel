@@ -22,10 +22,12 @@ public class Trip {
             this.duration = trip.getString("duration");
             this.index = trip.getInt("idx");
             this.ctxRecon = trip.getString("ctxRecon");
+            legList = new ArrayList<>();
             JSONArray legs = trip.getJSONObject("LegList").getJSONArray("Leg");
             for(int i = 0; i < legs.length(); i++) {
                 legList.add(new Leg(legs.getJSONObject(i)));
             }
+            this.serviceDays = new ServiceDays(trip.getJSONArray("ServiceDays").getJSONObject(0));
         } catch (JSONException e) {
             e.printStackTrace();
         }

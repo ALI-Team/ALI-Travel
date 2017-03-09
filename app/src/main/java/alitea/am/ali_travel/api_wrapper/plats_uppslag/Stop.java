@@ -1,4 +1,4 @@
-package alitea.am.ali_travel.api_wrapper;
+package alitea.am.ali_travel.api_wrapper.plats_uppslag;
 
 import android.annotation.SuppressLint;
 
@@ -7,6 +7,8 @@ import org.json.JSONObject;
 
 import java.util.EnumSet;
 import java.util.Locale;
+
+import alitea.am.ali_travel.api_wrapper.TrafikSlag;
 
 /**
  * Created by axel on 04/03/17.

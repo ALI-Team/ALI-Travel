@@ -3,8 +3,8 @@ package alitea.am.ali_travel.api_wrapper.rese_planerare;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigInteger;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
@@ -18,7 +18,7 @@ import alitea.am.ali_travel.api_wrapper.util.DateFormats;
 public class ServiceDays {
     private GregorianCalendar planningPeriodBegin;
     private GregorianCalendar planningPeriodEnd;
-    private long sDaysB;
+    private BigInteger sDaysB;
     private String sDaysI, sDaysR;
 
     public ServiceDays(JSONObject jsonObject) {
@@ -29,7 +29,7 @@ public class ServiceDays {
             Date pbeDate = DateFormats.DATE_FORMAT.parse(jsonObject.getString("planningPeriodEnd"));
             planningPeriodEnd = new GregorianCalendar(DateFormats.SV_LOCALE);
             planningPeriodEnd.setTime(pbeDate);
-            sDaysB = Integer.parseInt(jsonObject.getString("sDaysB"), 16);
+            sDaysB = new BigInteger(jsonObject.getString("sDaysB"), 16);
             if(jsonObject.has("sDaysI")) {
                 sDaysI = jsonObject.getString("sDaysI");
             }
@@ -59,6 +59,6 @@ public class ServiceDays {
         long diff = date.getTime() - planningPeriodBegin.getTime().getTime();
         long diffDays = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
         long bitFlag = 1 << diffDays;
-        return (sDaysB & bitFlag) == bitFlag;
+        return sDaysB.and(BigInteger.valueOf(bitFlag)).equals(BigInteger.valueOf(bitFlag));
     }
 }

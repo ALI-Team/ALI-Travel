@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import alitea.am.ali_travel.api_wrapper.util.DateFormats;
+import alitea.am.ali_travel.api_wrapper.util.DateJoiner;
 
 /**
  * Created by axel on 06/03/17.
@@ -29,19 +30,9 @@ public class OriginOrDestination {
             this.lon = originOrDestination.getDouble("lon");
             this.lat = originOrDestination.getDouble("lat");
 
-            this.date = new GregorianCalendar(DateFormats.SV_LOCALE);
+            this.date = DateJoiner.getCalendarFromDateTime(originOrDestination.getString("date"),
+                    originOrDestination.getString("time"));
 
-            Date date = DateFormats.DATE_FORMAT.parse(originOrDestination.getString("date"));
-            this.date.setTime(date);
-
-            Date time = DateFormats.TIME_FORMAT.parse(originOrDestination.getString("time"));
-
-            GregorianCalendar timeCalendar = new GregorianCalendar(DateFormats.SV_LOCALE);
-            timeCalendar.setTime(time);
-
-            this.date.set(Calendar.HOUR_OF_DAY, timeCalendar.get(Calendar.HOUR_OF_DAY));
-            this.date.set(Calendar.MINUTE, timeCalendar.get(Calendar.MINUTE));
-            this.date.set(Calendar.SECOND, timeCalendar.get(Calendar.SECOND));
         } catch (JSONException | ParseException e) {
             e.printStackTrace();
         }
