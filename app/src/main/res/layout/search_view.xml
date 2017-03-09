@@ -72,16 +72,17 @@
             android:layout_height="wrap_content"
             android:text="@string/arrival_date"
             android:onClick="onRadioButtonClicked"
-            android:layout_alignBaseline="@+id/button2"
-            android:layout_alignBottom="@+id/button2"
+            android:layout_alignBaseline="@+id/set_date"
+            android:layout_alignBottom="@+id/set_date"
             android:layout_toEndOf="@+id/departure_date_radio" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/set_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/radioGroup"
         android:text="@string/set_date"
-        android:drawableRight="@drawable/ic_today_black_24dp"/>
+        android:drawableRight="@drawable/ic_today_black_24dp"
+        android:onClick="selectDateTime"/>
 </RelativeLayout>

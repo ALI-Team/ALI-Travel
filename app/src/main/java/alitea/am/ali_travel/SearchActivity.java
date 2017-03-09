@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -32,10 +33,54 @@ import alitea.am.ali_travel.ui_elements.MultiSelectionSpinner;
 
 public class SearchActivity extends AppCompatActivity {
 
+    int dateType = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+    }
+
+    public void selectDateTime(View v) {
+
+        final Context that = (Context) this;
+
+        final int mYear, mMonth, mDay, mHour, mMinute;
+        final Calendar c = Calendar.getInstance();
+
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
+
+        DatePickerDialog date = new DatePickerDialog(that, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, final int month, final int dayOfMonth) {
+                TimePickerDialog time = new TimePickerDialog(that, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                /*arrival.setText(getString(R.string.arrival_date));
+                                rbutton.setText(getString(R.string.departure_date)+" - "+month+"/"+dayOfMonth+" "+hourOfDay+":"+minute);*/
+                    }
+                }, mHour, mMinute, false);
+
+                time.setButton(DialogInterface.BUTTON_NEGATIVE, getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == DialogInterface.BUTTON_NEGATIVE) {
+                                    /*if (arrival.getText() != (String)getString(R.string.arrival_date)) {
+                                        arrival.setChecked(true);
+                                    }
+                                    rbutton.setChecked(false);*/
+                        }
+                    }
+                });
+
+                time.show();
+            }
+        }, mYear, mMonth, mDay);
+
+        date.show();
     }
 
     @Override
@@ -82,120 +127,32 @@ public class SearchActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?
-        final RadioButton rbutton = (RadioButton)view;
         boolean checked = ((RadioButton) view).isChecked();
 
         // Check which radio button was clicked
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.departure_date_radio:
                 if (checked) {
 
-                    final RadioButton arrival = (RadioButton)findViewById(R.id.arrival_date_radio);
-                    arrival.setChecked(false);
+                    if (dateType == 1) {
+                        dateType = 0;
 
-                    final int mYear, mMonth, mDay, mHour, mMinute;
-                    final Calendar c = Calendar.getInstance();
-
-                    mYear = c.get(Calendar.YEAR);
-                    mMonth = c.get(Calendar.MONTH);
-                    mDay = c.get(Calendar.DAY_OF_MONTH);
-                    mHour = c.get(Calendar.HOUR_OF_DAY);
-                    mMinute = c.get(Calendar.MINUTE);
-
-                    final Context that = (Context)this;
-
-                    DatePickerDialog date = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePicker view, int year, final int month, final int dayOfMonth) {
-                            TimePickerDialog time = new TimePickerDialog(that, new TimePickerDialog.OnTimeSetListener() {
-                                @Override
-                                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                    arrival.setText(getString(R.string.arrival_date));
-                                    rbutton.setText(getString(R.string.departure_date)+" - "+month+"/"+dayOfMonth+" "+hourOfDay+":"+minute);
-                                }
-                            }, mHour, mMinute, false);
-
-                            time.setButton(DialogInterface.BUTTON_NEGATIVE, getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    if (which == DialogInterface.BUTTON_NEGATIVE) {
-                                        if (arrival.getText() != (String)getString(R.string.arrival_date)) {
-                                            arrival.setChecked(true);
-                                        }
-                                        rbutton.setChecked(false);
-                                    }
-                                }
-                            });
-
-                            time.show();
-                        }
-                    }, mYear, mMonth, mDay);
-
-                    date.setButton(DialogInterface.BUTTON_NEGATIVE, getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (which == DialogInterface.BUTTON_NEGATIVE) {
-                                rbutton.setChecked(false);
-                            }
-                        }
-                    });
-
-                    date.show();
+                        RadioButton arrival = (RadioButton) findViewById(R.id.arrival_date_radio);
+                        arrival.setChecked(false);
+                    }
                 }
                 break;
             case R.id.arrival_date_radio:
                 if (checked) {
-                    final RadioButton departure = (RadioButton)findViewById(R.id.departure_date_radio);
-                    departure.setChecked(false);
 
-                    final int mYear, mMonth, mDay, mHour, mMinute;
-                    final Calendar c = Calendar.getInstance();
+                    if (dateType == 0) {
+                        dateType = 1;
 
-                    mYear = c.get(Calendar.YEAR);
-                    mMonth = c.get(Calendar.MONTH);
-                    mDay = c.get(Calendar.DAY_OF_MONTH);
-                    mHour = c.get(Calendar.HOUR_OF_DAY);
-                    mMinute = c.get(Calendar.MINUTE);
-
-                    final Context that = (Context)this;
-
-                    DatePickerDialog date = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePicker view, int year, final int month, final int dayOfMonth) {
-                            TimePickerDialog time = new TimePickerDialog(that, new TimePickerDialog.OnTimeSetListener() {
-                                @Override
-                                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                    departure.setText(getString(R.string.departure_date));
-                                    rbutton.setText(getString(R.string.arrival_date)+" - "+month+"/"+dayOfMonth+" "+hourOfDay+":"+minute);
-                                }
-                            }, mHour, mMinute, false);
-
-                            time.setButton(DialogInterface.BUTTON_NEGATIVE, getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    if (which == DialogInterface.BUTTON_NEGATIVE) {
-                                        Log.e("nigger", (String) departure.getText());
-                                        Log.e("cunt", getString(R.string.departure_date));
-                                        if (departure.getText() != (String)getString(R.string.departure_date)) {
-                                            departure.setChecked(true);
-                                        }
-                                        rbutton.setChecked(false);
-                                    }
-                                }
-                            });
-
-                            time.show();
-                        }
-                    }, mYear, mMonth, mDay);
-
-                    date.setButton(DialogInterface.BUTTON_NEGATIVE, getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (which == DialogInterface.BUTTON_NEGATIVE) {
-                                rbutton.setChecked(false);
-                            }
-                        }
-                    });
-
-                    date.show();
+                        RadioButton departure = (RadioButton) findViewById(R.id.departure_date_radio);
+                        departure.setChecked(false);
+                    }
                 }
-                    break;
+                break;
         }
     }
 }
