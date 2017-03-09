@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -56,25 +57,14 @@ public class SearchActivity extends AppCompatActivity {
 
         DatePickerDialog date = new DatePickerDialog(that, R.style.DatePickerDialogDarkText, new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePicker view, int year, final int month, final int dayOfMonth) {
+            public void onDateSet(DatePicker view, final int year, final int month, final int dayOfMonth) {
                 TimePickerDialog time = new TimePickerDialog(that, R.style.DatePickerDialogDarkText, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                /*arrival.setText(getString(R.string.arrival_date));
-                                rbutton.setText(getString(R.string.departure_date)+" - "+month+"/"+dayOfMonth+" "+hourOfDay+":"+minute);*/
+                        TextView tv = (TextView)findViewById(R.id.current_date_time);
+                        tv.setText(year+"-"+month+"-"+dayOfMonth+" "+hourOfDay+":"+minute);
                     }
                 }, mHour, mMinute, false);
-
-                time.setButton(DialogInterface.BUTTON_NEGATIVE, getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == DialogInterface.BUTTON_NEGATIVE) {
-                                    /*if (arrival.getText() != (String)getString(R.string.arrival_date)) {
-                                        arrival.setChecked(true);
-                                    }
-                                    rbutton.setChecked(false);*/
-                        }
-                    }
-                });
 
                 time.show();
             }
