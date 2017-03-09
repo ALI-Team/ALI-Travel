@@ -82,12 +82,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/radioGroup"
-        android:text="Set Date" /><![CDATA[
-
-
-
-    />
-
-
-]]>
+        android:text="@string/set_date"
+        android:drawableRight="@drawable/ic_today_black_24dp"/>
 </RelativeLayout>
