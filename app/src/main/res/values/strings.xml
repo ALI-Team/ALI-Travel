@@ -9,4 +9,6 @@
     <string name="near_me">Near Me</string>
     <string name="modes_of_transport">Modes of Transport</string>
     <string name="choose">Choose</string>
+    <string name="arrival_date">Arrival Date</string>
+    <string name="departure_date">Departure Date</string>
 </resources>
