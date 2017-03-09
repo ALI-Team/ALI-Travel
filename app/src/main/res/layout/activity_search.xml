@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context="alitea.am.ali_travel.SearchActivity">
 
-    <include layout="@layout/search_view" />
+    <include layout="@layout/search_view"
+        android:id="@+id/include" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_search_gray_24dp" />
 
 </android.support.design.widget.CoordinatorLayout>
