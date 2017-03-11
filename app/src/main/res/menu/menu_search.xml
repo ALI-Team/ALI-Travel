@@ -4,22 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="alitea.am.ali_travel.SearchActivity">
     <item
+        android:id="@+id/swap"
+        android:icon="@drawable/ic_swap_horiz_white_24dp"
+        android:title="@string/swap"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/modes_of_transport"
         android:icon="@drawable/ic_directions_bus_white_24dp"
-<<<<<<< HEAD
         android:title="@string/modes_of_transport"
-=======
-        android:title="Modes of Transportation"
         app:showAsAction="always"/>
     <item
         android:id="@+id/near_me"
         android:icon="@drawable/ic_near_me_white_24dp"
         android:title="Near Me"
->>>>>>> UI
         app:showAsAction="always"/>
-    <item
-        android:id="@+id/near_me"
-        android:icon="@drawable/ic_near_me_white_24dp"
-        android:title="@string/near_me"
-        app:showAsAction="always" />
 </menu>

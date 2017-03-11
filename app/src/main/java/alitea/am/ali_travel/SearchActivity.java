@@ -5,33 +5,24 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
-<<<<<<< HEAD
 import android.support.v4.content.ContextCompat;
-=======
 import android.os.Build;
 import android.support.annotation.RequiresApi;
->>>>>>> UI
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-<<<<<<< HEAD
 import android.text.Editable;
-=======
->>>>>>> UI
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-<<<<<<< HEAD
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-=======
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
->>>>>>> UI
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -45,13 +36,10 @@ import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
 
-<<<<<<< HEAD
     Button swapButton;
     AutoCompleteTextView fromTF;
     AutoCompleteTextView toTF;
-=======
     int dateType = 0;
->>>>>>> UI
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,9 +135,6 @@ public class SearchActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-<<<<<<< HEAD
-=======
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?
@@ -181,5 +166,4 @@ public class SearchActivity extends AppCompatActivity {
                 break;
         }
     }
->>>>>>> UI
 }
