@@ -16,11 +16,13 @@
         <AutoCompleteTextView
             android:id="@+id/fromTF"
             android:theme="@style/AppTheme.PrimaryEditTextColor"
+            android:popupTheme="@style/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/departure"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:includeFontPadding="false" />
 
     </android.support.design.widget.TextInputLayout>
 

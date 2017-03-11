@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +23,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -33,6 +35,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+
+import alitea.am.ali_travel.api_wrapper.APIError;
+import alitea.am.ali_travel.api_wrapper.plats_uppslag.PlatsUppslagRequest;
+import alitea.am.ali_travel.api_wrapper.plats_uppslag.Stop;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -60,6 +66,54 @@ public class SearchActivity extends AppCompatActivity {
                         toTF.setText(departure);
                     }
                 });
+
+        final Context that = (Context)this;
+
+        final AutoCompleteTextView fromTF = (AutoCompleteTextView)findViewById(R.id.fromTF);
+        fromTF.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String searchString = s.toString();
+
+                if (searchString.length() > 3) {
+                    new PlatsUppslagRequest.Builder(that).input(searchString).fetch(new PlatsUppslagRequest.ResponseHandler() {
+                        @Override
+                        public void handleResponse(ArrayList<Stop> stops) {
+
+                            ArrayList<String> stopNames = new ArrayList<String>();
+
+                            //Suck my cock Java 7
+                            /*stopNames = stops.stream().map(stop -> {
+                                return stop.getName();
+                            });*/
+
+                            for (Stop stop:stops) {
+                                stopNames.add(stop.getName());
+                            }
+
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(that, android.R.layout.simple_spinner_dropdown_item, stopNames);
+                            fromTF.setAdapter(adapter);
+                        }
+                    }, new PlatsUppslagRequest.ErrorHandler() {
+
+                        @Override
+                        public void handleError(APIError error) {
+                            Log.e("error", error.toString());
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     public void selectDateTime(View v) {

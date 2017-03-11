@@ -37,7 +37,7 @@ public class PlatsUppslagRequest {
                 .scheme("https")
                 .authority("api.resrobot.se")
                 .path("/v2/location.name")
-                .appendQueryParameter("key", "[redacted]")
+                .appendQueryParameter("key", APIKeyHolder.API_KEY)
                 .appendQueryParameter("format", "json")
                 .build();
     }

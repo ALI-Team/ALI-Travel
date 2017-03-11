@@ -19,8 +19,13 @@
     </style>
 
     <style name="AppTheme.PrimaryEditTextColor" parent="Widget.AppCompat.EditText">
-        <item name="android:colorControlHighlight">@color/colorPrimary</item>
+        <item name="android:colorControlNormal">@color/colorPrimary</item>
         <item name="android:colorControlActivated">@color/colorPrimary</item>
+    </style>
+
+    <style name="white" parent="AppTheme.PopupOverlay">
+        <item name="android:colorControlNormal">@color/md_divider_white</item>
+        <item name="android:colorControlActivated">@color/md_divider_white</item>
     </style>
 
     <style name="TextAppearence.App.TextInputLayout" parent="@android:style/TextAppearance">
