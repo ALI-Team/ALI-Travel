@@ -14,6 +14,11 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import alitea.am.ali_travel.api_wrapper.APIError;
+import alitea.am.ali_travel.api_wrapper.OGT;
+import alitea.am.ali_travel.api_wrapper.rese_planerare.ResePlanerareRequest;
+import alitea.am.ali_travel.api_wrapper.rese_planerare.ResePlanerareResponse;
+
 public class MainActivity extends AppCompatActivity {
     private final static String TAG = MainActivity.class.getSimpleName();
 

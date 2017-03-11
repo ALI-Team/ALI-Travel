@@ -1,10 +1,8 @@
 package alitea.am.ali_travel;
 
-import android.util.Log;
-
 import org.junit.Test;
 
-import alitea.am.ali_travel.api_wrapper.Stop;
+import alitea.am.ali_travel.api_wrapper.plats_uppslag.Stop;
 
 import static org.junit.Assert.*;
 

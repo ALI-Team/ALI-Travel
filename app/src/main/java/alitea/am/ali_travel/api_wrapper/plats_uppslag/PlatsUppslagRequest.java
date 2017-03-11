@@ -1,4 +1,4 @@
-package alitea.am.ali_travel.api_wrapper;
+package alitea.am.ali_travel.api_wrapper.plats_uppslag;
 
 import android.content.Context;
 import android.net.Uri;
@@ -15,6 +15,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import alitea.am.ali_travel.api_wrapper.APIKeyHolder;
+import alitea.am.ali_travel.api_wrapper.APIError;
 
 /**
  * Created by axel on 04/03/17.
@@ -55,7 +58,7 @@ public class PlatsUppslagRequest {
         this.limit = limit;
     }
 
-    private void fetch(final ResponseHandler rHandler, final ErrorHandler eHandler) {
+    public void fetch(final ResponseHandler rHandler, final ErrorHandler eHandler) {
         RequestQueue queue = Volley.newRequestQueue(context);
         Uri.Builder urlBuilder = API_ENDPOINT.buildUpon();
         if (input != null) {
@@ -84,7 +87,7 @@ public class PlatsUppslagRequest {
 
                                 rHandler.handleResponse(stops);
                             } else if (response.has("errorCode") && response.has("errorText")) {
-                                Error requestError = new Error(response.getString("errorCode"),
+                                APIError requestError = new APIError(response.getString("errorCode"),
                                         response.getString("errorText"));
                                 eHandler.handleError(requestError);
                             }
@@ -135,7 +138,7 @@ public class PlatsUppslagRequest {
     }
 
     public interface ErrorHandler {
-        void handleError(Error error);
+        void handleError(APIError error);
     }
 
     public interface ResponseHandler {
