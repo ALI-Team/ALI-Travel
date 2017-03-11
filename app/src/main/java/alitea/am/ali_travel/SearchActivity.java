@@ -1,32 +1,57 @@
 package alitea.am.ali_travel;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.ColorStateList;
+<<<<<<< HEAD
 import android.support.v4.content.ContextCompat;
+=======
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+>>>>>>> UI
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+<<<<<<< HEAD
 import android.text.Editable;
+=======
+>>>>>>> UI
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+<<<<<<< HEAD
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+=======
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.RadioButton;
+>>>>>>> UI
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
 
+<<<<<<< HEAD
     Button swapButton;
     AutoCompleteTextView fromTF;
     AutoCompleteTextView toTF;
+=======
+    int dateType = 0;
+>>>>>>> UI
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +72,37 @@ public class SearchActivity extends AppCompatActivity {
                         toTF.setText(departure);
                     }
                 });
+    }
+
+    public void selectDateTime(View v) {
+
+        final Context that = (Context) this;
+
+        final int mYear, mMonth, mDay, mHour, mMinute;
+        final Calendar c = Calendar.getInstance();
+
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
+
+        DatePickerDialog date = new DatePickerDialog(that, R.style.DatePickerDialogDarkText, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, final int year, final int month, final int dayOfMonth) {
+                TimePickerDialog time = new TimePickerDialog(that, R.style.DatePickerDialogDarkText, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        TextView tv = (TextView)findViewById(R.id.current_date_time);
+                        tv.setText(year+"-"+month+"-"+dayOfMonth+" "+hourOfDay+":"+minute);
+                    }
+                }, mHour, mMinute, false);
+
+                time.show();
+            }
+        }, mYear, mMonth, mDay);
+
+        date.show();
     }
 
     @Override
@@ -92,4 +148,38 @@ public class SearchActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+<<<<<<< HEAD
+=======
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch (view.getId()) {
+            case R.id.departure_date_radio:
+                if (checked) {
+
+                    if (dateType == 1) {
+                        dateType = 0;
+
+                        RadioButton arrival = (RadioButton) findViewById(R.id.arrival_date_radio);
+                        arrival.setChecked(false);
+                    }
+                }
+                break;
+            case R.id.arrival_date_radio:
+                if (checked) {
+
+                    if (dateType == 0) {
+                        dateType = 1;
+
+                        RadioButton departure = (RadioButton) findViewById(R.id.departure_date_radio);
+                        departure.setChecked(false);
+                    }
+                }
+                break;
+        }
+    }
+>>>>>>> UI
 }
