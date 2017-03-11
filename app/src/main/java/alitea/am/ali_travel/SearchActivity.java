@@ -51,25 +51,11 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        swapButton = (Button)findViewById(R.id.swap);
         fromTF = (AutoCompleteTextView)findViewById(R.id.fromTF);
         toTF = (AutoCompleteTextView)findViewById(R.id.toTF);
 
-        swapButton.setOnClickListener(
-                new View.OnClickListener(){
-                    /* runs when the swap-button is clicked,
-                       switches the two input fields' text. */
-                    public void onClick(View view){
-                        String departure = String.valueOf(fromTF.getText());
-                        String arrival = String.valueOf(toTF.getText());
-                        fromTF.setText(arrival);
-                        toTF.setText(departure);
-                    }
-                });
-
         final Context that = (Context)this;
 
-        final AutoCompleteTextView fromTF = (AutoCompleteTextView)findViewById(R.id.fromTF);
         fromTF.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -98,6 +84,51 @@ public class SearchActivity extends AppCompatActivity {
 
                             ArrayAdapter<String> adapter = new ArrayAdapter<String>(that, android.R.layout.simple_spinner_dropdown_item, stopNames);
                             fromTF.setAdapter(adapter);
+                        }
+                    }, new PlatsUppslagRequest.ErrorHandler() {
+
+                        @Override
+                        public void handleError(APIError error) {
+                            Log.e("error", error.toString());
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        toTF.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String searchString = s.toString();
+
+                if (searchString.length() > 3) {
+                    new PlatsUppslagRequest.Builder(that).input(searchString).fetch(new PlatsUppslagRequest.ResponseHandler() {
+                        @Override
+                        public void handleResponse(ArrayList<Stop> stops) {
+
+                            ArrayList<String> stopNames = new ArrayList<String>();
+
+                            //Suck my cock Java 7
+                            /*stopNames = stops.stream().map(stop -> {
+                                return stop.getName();
+                            });*/
+
+                            for (Stop stop:stops) {
+                                stopNames.add(stop.getName());
+                            }
+
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(that, android.R.layout.simple_spinner_dropdown_item, stopNames);
+                            toTF.setAdapter(adapter);
                         }
                     }, new PlatsUppslagRequest.ErrorHandler() {
 
@@ -185,6 +216,13 @@ public class SearchActivity extends AppCompatActivity {
                     .negativeColor(ContextCompat.getColor(this, R.color.colorPrimary))
                     .choiceWidgetColor(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorPrimary)))
                     .show();
+        }
+
+        if (id == R.id.swap) {
+            String departure = String.valueOf(fromTF.getText());
+            String arrival = String.valueOf(toTF.getText());
+            fromTF.setText(arrival);
+            toTF.setText(departure);
         }
 
         return super.onOptionsItemSelected(item);
