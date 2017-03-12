@@ -19,8 +19,5 @@ public class ExampleUnitTest {
 
     @Test
     public void testStopProducts() {
-        for(Stop.TrafikSlag trafikSlag : Stop.TrafikSlag.getModes(9)) {
-            System.out.println(trafikSlag.name());
-        }
     }
 }

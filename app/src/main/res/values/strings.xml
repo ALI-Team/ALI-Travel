@@ -13,4 +13,5 @@
     <string name="departure_date">Departure</string>
     <string name="set_date">Set Date</string>
     <string name="no_date">No Date Set</string>
+    <string name="estimated">Estimated Time: </string>
 </resources>

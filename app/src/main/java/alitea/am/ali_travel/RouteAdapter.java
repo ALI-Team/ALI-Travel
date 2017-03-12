@@ -1,14 +1,25 @@
 package alitea.am.ali_travel;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.text.DateFormat;
-import java.util.ArrayList;
+import org.w3c.dom.Text;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+
+import alitea.am.ali_travel.api_wrapper.TrafikSlag;
+import alitea.am.ali_travel.api_wrapper.rese_planerare.Leg;
 import alitea.am.ali_travel.api_wrapper.rese_planerare.Trip;
 
 /**
@@ -18,13 +29,16 @@ import alitea.am.ali_travel.api_wrapper.rese_planerare.Trip;
 public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder> {
 
     private ArrayList<Trip> dataList;
+    public Context context;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView test;
+        TextView est;
 
         public ViewHolder(View itemView) {
             super(itemView);
             this.test = (TextView)itemView.findViewById(R.id.info_text);
+            this.est = (TextView)itemView.findViewById(R.id.estimated);
         }
     }
 
@@ -46,11 +60,75 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, int position) {
         TextView test = holder.test;
 
-        test.setText(DateFormat.getTimeInstance().format(dataList.get(position).getLegList().get(0).getOrigin().getDate().getTime()));
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm");
+
+        String orig = format.format(dataList.get(position).getLegList().get(0).getOrigin().getDate().getTime());
+        String dest = format.format(dataList.get(position).getLegList().get(dataList.get(position).getLegList().size()-1).getOrigin().getDate().getTime());
+        test.setText(orig+" - "+dest);
+
+        TextView est = holder.est;
+        est.setText(R.string.estimated + dataList.get(position).getDuration());
+
+        LinearLayout mos = (LinearLayout)holder.itemView.findViewById(R.id.mos_types);
+
+        for (Leg leg:dataList.get(position).getLegList()) {
+
+            if (dataList.get(position).getLegList().indexOf(leg) > 0) {
+                ImageView icon = new ImageView(context);
+                icon.setImageResource(R.drawable.ic_arrow_forward_black_24dp);
+                mos.addView(icon);
+            }
+
+            ImageView icon = new ImageView(context);
+
+            if (leg.isWalk()) {
+                icon.setImageResource(R.drawable.ic_directions_walk_black_24dp);
+            }
+
+            else {
+
+                try {
+                    switch (leg.getProduct().getCatCode()) {
+                        case 1:
+                            icon.setImageResource(R.drawable.ic_train_blue_24dp);
+                            break;
+                        case 2:
+                            icon.setImageResource(R.drawable.ic_train_blue_24dp);
+                            break;
+                        case 3:
+                            icon.setImageResource(R.drawable.ic_directions_bus_yellow_24dp);
+                            break;
+                        case 4:
+                            icon.setImageResource(R.drawable.ic_train_blue_24dp);
+                            break;
+                        case 5:
+                            icon.setImageResource(R.drawable.ic_subway_blue_24dp);
+                            break;
+                        case 6:
+                            icon.setImageResource(R.drawable.ic_tram_red_24dp);
+                            break;
+                        case 7:
+                            icon.setImageResource(R.drawable.ic_directions_bus_red_24dp);
+                            break;
+                        case 8:
+                            icon.setImageResource(R.drawable.ic_train_blue_24dp);
+                            break;
+                    }
+                } catch (NullPointerException exp) {
+                    icon.setImageResource(R.drawable.ic_directions_walk_black_24dp);
+                }
+            }
+
+            mos.addView(icon);
+        }
     }
 
     @Override
     public int getItemCount() {
         return dataList.size();
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 }

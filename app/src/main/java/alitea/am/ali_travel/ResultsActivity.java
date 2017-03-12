@@ -1,5 +1,6 @@
 package alitea.am.ali_travel;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -38,12 +39,17 @@ public class ResultsActivity extends AppCompatActivity {
         Log.i("origin", getIntent().getStringExtra("originID"));
         Log.i("dest", getIntent().getStringExtra("destID"));
 
+        final Context that = (Context)this;
+
         try {
             new ResePlanerareRequest.Builder(this).originID(getIntent().getStringExtra("originID")).destID(getIntent().getStringExtra("destID")).build().fetch(new ResePlanerareRequest.ResponseHandler() {
                 @Override
                 public void handleResponse(ResePlanerareResponse rpr) {
 
-                    recyclerView.setAdapter(new RouteAdapter(rpr.tripList));
+                    RouteAdapter adapter = new RouteAdapter(rpr.tripList);
+                    adapter.setContext(that);
+
+                    recyclerView.setAdapter(adapter);
                 }
             }, new ResePlanerareRequest.ErrorHandler() {
                 @Override
