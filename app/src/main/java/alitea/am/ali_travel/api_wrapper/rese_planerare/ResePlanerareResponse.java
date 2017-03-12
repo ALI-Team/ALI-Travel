@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 
 public class ResePlanerareResponse {
-    private ArrayList<Trip> tripList;
+    public ArrayList<Trip> tripList;
     private String scrF;
     private String scrB;
 

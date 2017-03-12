@@ -4,7 +4,9 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -17,6 +19,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -42,19 +45,75 @@ import alitea.am.ali_travel.api_wrapper.plats_uppslag.Stop;
 
 public class SearchActivity extends AppCompatActivity {
 
-    Button swapButton;
     AutoCompleteTextView fromTF;
     AutoCompleteTextView toTF;
-    int dateType = 0;
+
+    int dateType, year = 0, month, day, hour, minute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        fromTF = (AutoCompleteTextView)findViewById(R.id.fromTF);
-        toTF = (AutoCompleteTextView)findViewById(R.id.toTF);
 
         final Context that = (Context)this;
+
+        FloatingActionButton search = (FloatingActionButton)findViewById(R.id.searchButton);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (year == 0) {
+                    //TODO add fallback if no date & time is selected
+                }
+
+                new PlatsUppslagRequest.Builder(that).input(String.valueOf(fromTF.getText())).fetch(new PlatsUppslagRequest.ResponseHandler() {
+                    @Override
+                    public void handleResponse(ArrayList<Stop> stops) {
+
+                        final String origID = stops.get(0).getId();
+
+                        new PlatsUppslagRequest.Builder(that).input(String.valueOf(toTF.getText())).fetch(new PlatsUppslagRequest.ResponseHandler() {
+                            @Override
+                            public void handleResponse(ArrayList<Stop> stops) {
+
+                                final String destID = stops.get(0).getId();
+
+                                Intent results = new Intent(SearchActivity.this, ResultsActivity.class);
+                                results.putExtra("year", year);
+                                results.putExtra("month", month);
+                                results.putExtra("day", day);
+                                results.putExtra("hour", hour);
+                                results.putExtra("minute", minute);
+                                results.putExtra("originID", origID);
+                                results.putExtra("destID", destID);
+                                results.putExtra("dateType", dateType);
+                                startActivity(results);
+
+                            }
+                        }, new PlatsUppslagRequest.ErrorHandler() {
+
+                            @Override
+                            public void handleError(APIError error) {
+                                Log.e("error", error.toString());
+                            }
+                        });
+
+                    }
+                }, new PlatsUppslagRequest.ErrorHandler() {
+
+                    @Override
+                    public void handleError(APIError error) {
+                        Log.e("error", error.toString());
+                    }
+                });
+            }
+        });
+
+        RadioButton departure = (RadioButton)findViewById(R.id.departure_date_radio);
+        departure.setChecked(true);
+
+        fromTF = (AutoCompleteTextView)findViewById(R.id.fromTF);
+        toTF = (AutoCompleteTextView)findViewById(R.id.toTF);
 
         fromTF.addTextChangedListener(new TextWatcher() {
             @Override
@@ -82,7 +141,7 @@ public class SearchActivity extends AppCompatActivity {
                                 stopNames.add(stop.getName());
                             }
 
-                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(that, android.R.layout.simple_spinner_dropdown_item, stopNames);
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(that, android.R.layout.simple_dropdown_item_1line, stopNames);
                             fromTF.setAdapter(adapter);
                         }
                     }, new PlatsUppslagRequest.ErrorHandler() {
