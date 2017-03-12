@@ -33,22 +33,42 @@ public class Trip {
         }
     }
 
+    /**
+     * Gets duration as String
+     * @return Duration formatted according to ISO-8601
+     */
     public String getDuration() {
         return duration;
     }
 
+    /**
+     * Gets index of this trip
+     * @return index of trip
+     */
     public int getIndex() {
         return index;
     }
 
+    /**
+     * Gets ctxRecon
+     * @return String describing trip
+     */
     public String getCtxRecon() {
         return ctxRecon;
     }
 
+    /**
+     * Gets serviceDays
+     * @return ServiceDays instance
+     */
     public ServiceDays getServiceDays() {
         return serviceDays;
     }
 
+    /**
+     * Gets legList
+     * @return ArrayList<Leg> containing all the subparts of this trip
+     */
     public ArrayList<Leg> getLegList() {
         return legList;
     }

@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 
 public class ResePlanerareResponse {
-    public ArrayList<Trip> tripList;
+    private ArrayList<Trip> tripList;
     private String scrF;
     private String scrB;
 
@@ -30,5 +30,29 @@ public class ResePlanerareResponse {
         }
     }
 
+    /**
+     * Gets list of trips
+     * @return ArrayList<Trip>
+     */
+    public ArrayList<Trip> getTripList() {
+        return tripList;
+    }
 
+    /**
+     * Gets context for searching earlier departures
+     * Use return value of this method in ResePlanerareRequest$Builder::context
+     * @return String containing info for searching earlier departures
+     */
+    public String getScrF() {
+        return scrF;
+    }
+
+    /**
+     * Gets context for searching later departures
+     * Use return value of this method in ResePlanerareRequest$Builder::context
+     * @return String containing info for searching later departures
+     */
+    public String getScrB() {
+        return scrB;
+    }
 }
