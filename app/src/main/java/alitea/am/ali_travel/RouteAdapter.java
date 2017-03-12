@@ -67,7 +67,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder> 
         test.setText(orig+" - "+dest);
 
         TextView est = holder.est;
-        est.setText(String.valueOf(R.string.estimated) + String.valueOf(dataList.get(position).getDuration()));
+        est.setText(context.getString(R.string.estimated, dataList.get(position).getDuration()));
 
         LinearLayout mos = (LinearLayout)holder.itemView.findViewById(R.id.mos_types);
 
