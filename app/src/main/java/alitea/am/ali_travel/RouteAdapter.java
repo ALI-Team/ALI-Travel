@@ -60,14 +60,14 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, int position) {
         TextView test = holder.test;
 
-        SimpleDateFormat format = new SimpleDateFormat("hh:mm");
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
 
         String orig = format.format(dataList.get(position).getLegList().get(0).getOrigin().getDate().getTime());
-        String dest = format.format(dataList.get(position).getLegList().get(dataList.get(position).getLegList().size()-1).getOrigin().getDate().getTime());
+        String dest = format.format(dataList.get(position).getLegList().get(dataList.get(position).getLegList().size()-1).getDestination().getDate().getTime());
         test.setText(orig+" - "+dest);
 
         TextView est = holder.est;
-        est.setText(R.string.estimated + dataList.get(position).getDuration());
+        est.setText(String.valueOf(R.string.estimated) + String.valueOf(dataList.get(position).getDuration()));
 
         LinearLayout mos = (LinearLayout)holder.itemView.findViewById(R.id.mos_types);
 
@@ -120,6 +120,16 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder> 
             }
 
             mos.addView(icon);
+
+            if (leg.isWalk() == false) {
+                try {
+                    TextView line = new TextView(context);
+                    line.setText(String.valueOf(leg.getProduct().getNum()));
+                    mos.addView(line);
+                } catch (NullPointerException exp) {
+
+                }
+            }
         }
     }
 
