@@ -17,10 +17,12 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -45,69 +47,27 @@ import alitea.am.ali_travel.api_wrapper.plats_uppslag.Stop;
 
 public class SearchActivity extends AppCompatActivity {
 
-    AutoCompleteTextView fromTF;
-    AutoCompleteTextView toTF;
+    AutoCompleteTextView fromTF, toTF;
 
     int dateType, year = 0, month, day, hour, minute;
+
+    Context that;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        final Context that = (Context)this;
+        that = (Context)this;
 
         FloatingActionButton search = (FloatingActionButton)findViewById(R.id.searchButton);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (year == 0) {
-                    //TODO add fallback if no date & time is selected
-                }
-
-                new PlatsUppslagRequest.Builder(that).input(String.valueOf(fromTF.getText())).fetch(new PlatsUppslagRequest.ResponseHandler() {
-                    @Override
-                    public void handleResponse(ArrayList<Stop> stops) {
-
-                        final String origID = stops.get(0).getId();
-
-                        new PlatsUppslagRequest.Builder(that).input(String.valueOf(toTF.getText())).fetch(new PlatsUppslagRequest.ResponseHandler() {
-                            @Override
-                            public void handleResponse(ArrayList<Stop> stops) {
-
-                                final String destID = stops.get(0).getId();
-
-                                Intent results = new Intent(SearchActivity.this, ResultsActivity.class);
-                                results.putExtra("year", year);
-                                results.putExtra("month", month);
-                                results.putExtra("day", day);
-                                results.putExtra("hour", hour);
-                                results.putExtra("minute", minute);
-                                results.putExtra("originID", origID);
-                                results.putExtra("destID", destID);
-                                results.putExtra("dateType", dateType);
-                                startActivity(results);
-
-                            }
-                        }, new PlatsUppslagRequest.ErrorHandler() {
-
-                            @Override
-                            public void handleError(APIError error) {
-                                Log.e("error", error.toString());
-                            }
-                        });
-
-                    }
-                }, new PlatsUppslagRequest.ErrorHandler() {
-
-                    @Override
-                    public void handleError(APIError error) {
-                        Log.e("error", error.toString());
-                    }
-                });
+                search();
             }
         });
+
 
         RadioButton departure = (RadioButton)findViewById(R.id.departure_date_radio);
         departure.setChecked(true);
@@ -202,6 +162,83 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+
+        /** search by pressing down the keyboard enter key */
+        toTF.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    search();
+                }
+                return false;
+            }
+        });
+
+        /** search by pressing down the keyboard enter key */
+        fromTF.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    search();
+                }
+                return false;
+            }
+        });
+    }
+    /**
+     * Gather the information which the user entered in
+     * and then search with the api and proceed to the ResultsActivity.
+     * */
+    public void search(){
+
+        if (year == 0) {
+            //TODO add fallback if no date & time is selected
+            Calendar cal = Calendar.getInstance();
+            year = cal.get(Calendar.YEAR);
+            month = cal.get(Calendar.MONTH);
+            day = cal.get(Calendar.DAY_OF_MONTH);
+            hour = cal.get(Calendar.HOUR_OF_DAY);
+            minute = cal.get(Calendar.MINUTE);
+        }
+
+        new PlatsUppslagRequest.Builder(that).input(String.valueOf(fromTF.getText())).fetch(new PlatsUppslagRequest.ResponseHandler() {
+            @Override
+            public void handleResponse(ArrayList<Stop> stops) {
+
+                final String origID = stops.get(0).getId();
+
+                new PlatsUppslagRequest.Builder(that).input(String.valueOf(toTF.getText())).fetch(new PlatsUppslagRequest.ResponseHandler() {
+                    @Override
+                    public void handleResponse(ArrayList<Stop> stops) {
+
+                        final String destID = stops.get(0).getId();
+
+                        Intent results = new Intent(SearchActivity.this, ResultsActivity.class);
+                        results.putExtra("year", year);
+                        results.putExtra("month", month);
+                        results.putExtra("day", day);
+                        results.putExtra("hour", hour);
+                        results.putExtra("minute", minute);
+                        results.putExtra("originID", origID);
+                        results.putExtra("destID", destID);
+                        results.putExtra("dateType", dateType);
+                        startActivity(results);
+
+                    }
+                }, new PlatsUppslagRequest.ErrorHandler() {
+
+                    @Override
+                    public void handleError(APIError error) {
+                        Log.e("error", error.toString());
+                    }
+                });
+
+            }
+        }, new PlatsUppslagRequest.ErrorHandler() {
+
+            @Override
+            public void handleError(APIError error) {
+                Log.e("error", error.toString());
             }
         });
     }
