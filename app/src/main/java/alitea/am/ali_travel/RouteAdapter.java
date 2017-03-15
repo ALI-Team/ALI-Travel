@@ -1,6 +1,7 @@
 package alitea.am.ali_travel;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -141,6 +142,8 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
                 Log.i("nigger", "clicked");
+                Intent details = new Intent(context, RouteDetailsActivity.class);
+                context.startActivity(details);
             }
         });
     }

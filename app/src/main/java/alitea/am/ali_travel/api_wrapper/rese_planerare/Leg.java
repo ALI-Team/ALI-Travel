@@ -1,5 +1,8 @@
 package alitea.am.ali_travel.api_wrapper.rese_planerare;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,7 +13,7 @@ import java.util.ArrayList;
  * Created by axel on 06/03/17.
  */
 
-public class Leg {
+public class Leg implements Parcelable {
     private OriginOrDestination origin, destination;
     private String type, name, direction, duration, transportCategory;
     private int dist;
@@ -94,5 +97,23 @@ public class Leg {
 
     public boolean isWalk() {
         return this.type.equals("WALK");
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(type);
+        dest.writeString(name);
+        dest.writeString(direction);
+        dest.writeString(duration);
+        dest.writeString(transportCategory);
+        dest.writeInt(dist);
+        dest.writeInt(transportNumber);
+        dest.writeInt(index);
+        dest.writeArray(stopList.toArray());
     }
 }

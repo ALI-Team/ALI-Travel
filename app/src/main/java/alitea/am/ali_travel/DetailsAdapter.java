@@ -21,7 +21,7 @@ import alitea.am.ali_travel.api_wrapper.rese_planerare.Trip;
  */
 
 public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.ViewHolder> {
-    private ArrayList<Trip> dataList;
+    private Trip dataList;
     public Context context;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -35,7 +35,7 @@ public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.ViewHold
         }
     }
 
-    public DetailsAdapter(ArrayList<Trip> dataList) {
+    public DetailsAdapter(Trip dataList) {
         this.dataList = dataList;
     }
 
