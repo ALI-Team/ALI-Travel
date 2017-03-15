@@ -24,11 +24,12 @@
         <activity
             android:name=".SearchActivity"
             android:label="Route Planner"
-            android:parentActivityName=".MainActivity"></activity>
-        <activity android:name=".ResultsActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ResultsActivity"
             android:label="Results"
-            android:parentActivityName=".SearchActivity">
-        </activity>
+            android:parentActivityName=".SearchActivity"></activity>
+        <activity android:name=".RouteDetailsActivity"></activity>
     </application>
 
 </manifest>

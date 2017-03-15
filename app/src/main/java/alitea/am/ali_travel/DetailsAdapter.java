@@ -10,28 +10,21 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
-import alitea.am.ali_travel.api_wrapper.TrafikSlag;
 import alitea.am.ali_travel.api_wrapper.rese_planerare.Leg;
 import alitea.am.ali_travel.api_wrapper.rese_planerare.Trip;
 
 /**
- * Created by luka on 12.03.17.
+ * Created by luka on 15.03.17.
  */
 
-public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder> {
-
+public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.ViewHolder> {
     private ArrayList<Trip> dataList;
     public Context context;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView test;
         TextView est;
 
@@ -42,22 +35,22 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder> 
         }
     }
 
-    public RouteAdapter(ArrayList<Trip> dataList) {
+    public DetailsAdapter(ArrayList<Trip> dataList) {
         this.dataList = dataList;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public DetailsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.results_view, parent, false);
 
-        ViewHolder vh = new ViewHolder(view);
+        DetailsAdapter.ViewHolder vh = new DetailsAdapter.ViewHolder(view);
         return vh;
 
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(DetailsAdapter.ViewHolder holder, int position) {
         TextView test = holder.test;
 
         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
@@ -136,13 +129,6 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder> 
                 }
             }
         }
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("nigger", "clicked");
-            }
-        });
     }
 
     @Override
