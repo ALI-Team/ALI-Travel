@@ -18,6 +18,7 @@ import alitea.am.ali_travel.api_wrapper.APIError;
 import alitea.am.ali_travel.api_wrapper.OGT;
 import alitea.am.ali_travel.api_wrapper.rese_planerare.ResePlanerareRequest;
 import alitea.am.ali_travel.api_wrapper.rese_planerare.ResePlanerareResponse;
+import alitea.am.ali_travel.favoriteapiwrapper.User;
 
 public class MainActivity extends AppCompatActivity {
     private final static String TAG = MainActivity.class.getSimpleName();
@@ -31,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-
+        User user=new User();
+        user.init(this);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
