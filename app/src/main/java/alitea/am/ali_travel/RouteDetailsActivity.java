@@ -24,7 +24,7 @@ public class RouteDetailsActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        DetailsAdapter adapter = new DetailsAdapter(getIntent().get);
+        DetailsAdapter adapter = new DetailsAdapter(getIntent().);
         recyclerView.setAdapter(adapter);
     }
 }

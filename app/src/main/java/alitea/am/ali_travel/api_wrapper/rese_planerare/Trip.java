@@ -38,6 +38,25 @@ public class Trip implements Parcelable {
         }
     }
 
+    protected Trip(Parcel in) {
+        duration = in.readString();
+        index = in.readInt();
+        ctxRecon = in.readString();
+        legList = in.createTypedArrayList(Leg.CREATOR);
+    }
+
+    public static final Creator<Trip> CREATOR = new Creator<Trip>() {
+        @Override
+        public Trip createFromParcel(Parcel in) {
+            return new Trip(in);
+        }
+
+        @Override
+        public Trip[] newArray(int size) {
+            return new Trip[size];
+        }
+    };
+
     /**
      * Gets duration as String
      * @return Duration formatted according to ISO-8601

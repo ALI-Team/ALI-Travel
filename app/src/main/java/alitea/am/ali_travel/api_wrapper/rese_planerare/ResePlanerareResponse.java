@@ -1,5 +1,8 @@
 package alitea.am.ali_travel.api_wrapper.rese_planerare;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,7 +13,7 @@ import java.util.ArrayList;
  * Created by axel on 05/03/17.
  */
 
-public class ResePlanerareResponse {
+public class ResePlanerareResponse implements Parcelable{
     private ArrayList<Trip> tripList;
     private String scrF;
     private String scrB;
@@ -29,6 +32,36 @@ public class ResePlanerareResponse {
             e.printStackTrace();
         }
     }
+
+    protected ResePlanerareResponse(Parcel in) {
+        tripList = in.createTypedArrayList(Trip.CREATOR);
+        scrF = in.readString();
+        scrB = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(tripList);
+        dest.writeString(scrF);
+        dest.writeString(scrB);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<ResePlanerareResponse> CREATOR = new Creator<ResePlanerareResponse>() {
+        @Override
+        public ResePlanerareResponse createFromParcel(Parcel in) {
+            return new ResePlanerareResponse(in);
+        }
+
+        @Override
+        public ResePlanerareResponse[] newArray(int size) {
+            return new ResePlanerareResponse[size];
+        }
+    };
 
     /**
      * Gets list of trips
