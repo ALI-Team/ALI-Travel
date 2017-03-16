@@ -27,6 +27,7 @@ public class PlatsUppslagRequest {
     private String input;
     private int limit = -1;
     private Context context;
+    private boolean approx;
     private final Uri API_ENDPOINT;
 
     private PlatsUppslagRequest(Context context, String input, int limit) {
@@ -42,27 +43,11 @@ public class PlatsUppslagRequest {
                 .build();
     }
 
-    public String getInput() {
-        return input;
-    }
-
-    public void setInput(String input) {
-        this.input = input;
-    }
-
-    public int getLimit() {
-        return limit;
-    }
-
-    public void setLimit(int limit) {
-        this.limit = limit;
-    }
-
     public void fetch(final ResponseHandler rHandler, final ErrorHandler eHandler) {
         RequestQueue queue = Volley.newRequestQueue(context);
         Uri.Builder urlBuilder = API_ENDPOINT.buildUpon();
         if (input != null) {
-            urlBuilder.appendQueryParameter("input", this.input);
+            urlBuilder.appendQueryParameter("input", this.input + (approx ? "?" : ""));
         } else {
             urlBuilder.appendQueryParameter("input", "");
         }
@@ -112,23 +97,58 @@ public class PlatsUppslagRequest {
         private String input;
         private int limit;
         private Context ctx;
+        private boolean approx;
 
         public Builder(Context ctx) {
             this.ctx = ctx;
         }
 
+        /**
+         * Sets input
+         * @param input input to search stations for
+         * @return this
+         */
         public PlatsUppslagRequest.Builder input(String input) {
             this.input = input;
             return this;
         }
 
+        /**
+         * Sets limit
+         * @param limit max number of stops to receive
+         * @return this
+         */
         public PlatsUppslagRequest.Builder limit(int limit) {
             this.limit = limit;
             return this;
         }
 
+        /**
+         * Search for approximate results
+         * Searching for approx prevents api from returning only one item(a city) when input matches
+         * city name.
+         * @return this
+         */
+        public PlatsUppslagRequest.Builder approx() {
+            return this.approx(true);
+        }
+
+        /**
+         * Sets whether to search for approximate results
+         * Searching for approx prevents api from returning only one item(a city) when input matches
+         * city name.
+         * @param approx true if search for approx false if not
+         * @return this
+         */
+        public PlatsUppslagRequest.Builder approx(boolean approx) {
+            this.approx = approx;
+            return this;
+        }
+
         public PlatsUppslagRequest build() {
-            return new PlatsUppslagRequest(ctx, this.input, this.limit);
+            PlatsUppslagRequest pur = new PlatsUppslagRequest(ctx, this.input, this.limit);
+            pur.approx = this.approx;
+            return pur;
         }
 
         public void fetch(ResponseHandler rHandler, ErrorHandler eHandler) {

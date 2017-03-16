@@ -9,6 +9,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import alitea.am.ali_travel.api_wrapper.util.DurationFormatter;
+
 /**
  * Created by axel on 05/03/17.
  */
@@ -36,22 +38,50 @@ public class Trip implements Parcelable {
         }
     }
 
+    /**
+     * Gets duration as String
+     * @return Duration formatted according to ISO-8601
+     */
     public String getDuration() {
         return duration;
     }
 
+    /**
+     * Gets duration and converts it to human readable format
+     * @return human readable duration, ie 06:09:00
+     */
+    public String getDurationHuman() {
+        return DurationFormatter.ISO_8601ToHuman(duration);
+    }
+
+    /**
+     * Gets index of this trip
+     * @return index of trip
+     */
     public int getIndex() {
         return index;
     }
 
+    /**
+     * Gets ctxRecon
+     * @return String describing trip
+     */
     public String getCtxRecon() {
         return ctxRecon;
     }
 
+    /**
+     * Gets serviceDays
+     * @return ServiceDays instance
+     */
     public ServiceDays getServiceDays() {
         return serviceDays;
     }
 
+    /**
+     * Gets legList
+     * @return ArrayList<Leg> containing all the subparts of this trip
+     */
     public ArrayList<Leg> getLegList() {
         return legList;
     }

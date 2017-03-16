@@ -39,22 +39,44 @@ public class ServiceDays {
         }
     }
 
+    /**
+     * Gets date when planning period begins
+     * @return GregorianCalendar with date
+     */
     public GregorianCalendar getPlanningPeriodBegin() {
         return planningPeriodBegin;
     }
 
+    /**
+     * Gets date when planning period ends
+     * @return GregorianCalendar with date
+     */
     public GregorianCalendar getPlanningPeriodEnd() {
         return planningPeriodEnd;
     }
 
+    /**
+     * Attempt to contextually interpret exceptions to the rule of when trip is going
+     * @return String with text, ex "utom 19. jun"
+     */
     public String getsDaysI() {
         return sDaysI;
     }
 
+    /**
+     * Attempt to contextually interpret when trip is active
+     * @return String with text, ex "fre", "varje dag"
+     */
     public String getsDaysR() {
         return sDaysR;
     }
 
+    /**
+     * Whether or not the trip is active on date
+     * The API sent the data as bitflags in hexadecimal....
+     * @param date Date to query
+     * @return boolean
+     */
     public boolean serviceOnDate(Date date) {
         long diff = date.getTime() - planningPeriodBegin.getTime().getTime();
         long diffDays = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
