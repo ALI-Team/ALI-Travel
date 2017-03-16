@@ -47,6 +47,29 @@ public class Leg implements Parcelable {
         }
     }
 
+    protected Leg(Parcel in) {
+        type = in.readString();
+        name = in.readString();
+        direction = in.readString();
+        duration = in.readString();
+        transportCategory = in.readString();
+        dist = in.readInt();
+        transportNumber = in.readInt();
+        index = in.readInt();
+    }
+
+    public static final Creator<Leg> CREATOR = new Creator<Leg>() {
+        @Override
+        public Leg createFromParcel(Parcel in) {
+            return new Leg(in);
+        }
+
+        @Override
+        public Leg[] newArray(int size) {
+            return new Leg[size];
+        }
+    };
+
     public OriginOrDestination getOrigin() {
         return origin;
     }
