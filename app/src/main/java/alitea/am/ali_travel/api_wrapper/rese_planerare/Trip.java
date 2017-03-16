@@ -6,6 +6,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import alitea.am.ali_travel.api_wrapper.util.DurationFormatter;
+
 /**
  * Created by axel on 05/03/17.
  */
@@ -39,6 +41,14 @@ public class Trip {
      */
     public String getDuration() {
         return duration;
+    }
+
+    /**
+     * Gets duration and converts it to human readable format
+     * @return human readable duration, ie 06:09:00
+     */
+    public String getDurationHuman() {
+        return DurationFormatter.ISO_8601ToHuman(duration);
     }
 
     /**

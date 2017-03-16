@@ -104,7 +104,7 @@ public class Leg {
 
     /**
      * Gets duration in human format
-     * @return String duration, ie
+     * @return String duration, ie 06:45:23
      */
     public String getDurationHuman() {
         return DurationFormatter.ISO_8601ToHuman(getDuration());
