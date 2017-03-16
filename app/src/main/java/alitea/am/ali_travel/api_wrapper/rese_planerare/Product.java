@@ -27,34 +27,66 @@ public class Product {
         }
     }
 
+    /**
+     * Gets name of company, ie "Öresundståg 1038"
+     * @return name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Gets short name for category, ie "JOR"
+     * @return short name of category
+     */
     public String getCatOutS() {
         return catOutS;
     }
 
+    /**
+     * Gets long name for category, ie "Öresundståg"
+     * @return long name of category
+     */
     public String getCatOutL() {
         return catOutL;
     }
 
+    /**
+     * Gets name of operator, ie "SJ" or "Östgötatrafiken"
+     * @return name
+     */
     public String getOperator() {
         return operator;
     }
 
+    /**
+     * Gets url of operators website
+     * @return url string
+     */
     public String getOperatorUrl() {
         return operatorUrl;
     }
 
+    /**
+     * Bus or train number i think, same as number in Leg
+     * @return int num
+     */
     public int getNum() {
         return num;
     }
 
+    /**
+     * Type of thingy, should be equal to log2(TrafikSlag.getNum())
+     * @return int catCode
+     */
     public int getCatCode() {
         return catCode;
     }
 
+    /**
+     * operator code
+     * @return int operator code
+     */
     public int getOperatorCode() {
         return operatorCode;
     }

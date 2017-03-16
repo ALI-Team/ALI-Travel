@@ -38,30 +38,58 @@ public class OriginOrDestination {
         }
     }
 
+    /**
+     * Gets name
+     * @return string name of stop
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Gets type
+     * @return always "ST", more alternatives might be added in future
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * Gets ID of stop
+     * @return string ID, used in other api calls
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Gets exdId
+     * @return string ID, usually same as ID
+     */
     public String getExtId() {
         return extId;
     }
 
+    /**
+     * Gets lon
+     * @return double longitude
+     */
     public double getLon() {
         return lon;
     }
 
+    /**
+     * Gets lat
+     * @return double latitude
+     */
     public double getLat() {
         return lat;
     }
 
+    /**
+     * Gets date of when you arrive there
+     * @return GregorianCalendar, when you arrive
+     */
     public GregorianCalendar getDate() {
         return date;
     }

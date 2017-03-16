@@ -46,7 +46,7 @@ public class ResultsActivity extends AppCompatActivity {
                 @Override
                 public void handleResponse(ResePlanerareResponse rpr) {
 
-                    RouteAdapter adapter = new RouteAdapter(rpr.tripList);
+                    RouteAdapter adapter = new RouteAdapter(rpr.getTripList());
                     adapter.setContext(that);
 
                     recyclerView.setAdapter(adapter);
