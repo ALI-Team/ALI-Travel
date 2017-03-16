@@ -119,22 +119,43 @@ public class Leg {
         return transportCategory;
     }
 
+    /**
+     * Gets dist, only available if type is WALK
+     * @return distance in m
+     */
     public int getDist() {
         return dist;
     }
 
+    /**
+     * Gets transport number
+     * Line number for busses, train number for trains
+     * @return transportnumber
+     */
     public int getTransportNumber() {
         return transportNumber;
     }
 
+    /**
+     * Gets info about the company behind the leg
+     * @return instance of Product containing the info
+     */
     public Product getProduct() {
         return product;
     }
 
+    /**
+     * Gets stoplist
+     * @return list of stops
+     */
     public ArrayList<Stop> getStopList() {
         return stopList;
     }
 
+    /**
+     * Is walk?
+     * @return return true if type is WALK
+     */
     public boolean isWalk() {
         return this.type.equals("WALK");
     }
