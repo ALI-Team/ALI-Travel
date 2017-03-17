@@ -198,6 +198,8 @@ public class Leg implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(origin, flags);
+        dest.writeParcelable(destination, flags);
         dest.writeString(type);
         dest.writeString(name);
         dest.writeString(direction);
@@ -206,9 +208,7 @@ public class Leg implements Parcelable {
         dest.writeInt(dist);
         dest.writeInt(transportNumber);
         dest.writeInt(index);
-        dest.writeList(stopList);
-        dest.writeParcelable(origin, flags);
-        dest.writeParcelable(destination, flags);
         dest.writeParcelable(product, flags);
+        dest.writeList(stopList);
     }
 }
