@@ -21,6 +21,7 @@ import java.util.Locale;
 
 import alitea.am.ali_travel.api_wrapper.TrafikSlag;
 import alitea.am.ali_travel.api_wrapper.rese_planerare.Leg;
+import alitea.am.ali_travel.api_wrapper.rese_planerare.OriginOrDestination;
 import alitea.am.ali_travel.api_wrapper.rese_planerare.Trip;
 
 /**
@@ -58,7 +59,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         TextView test = holder.test;
 
         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
@@ -142,7 +143,10 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
                 Log.i("nigger", "clicked");
+                Trip trip = dataList.get(position);
+                Log.e("lkjsdf", "lkadfj");
                 Intent details = new Intent(context, RouteDetailsActivity.class);
+                details.putExtra("trip", dataList.get(position));
                 context.startActivity(details);
             }
         });

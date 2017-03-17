@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import alitea.am.ali_travel.api_wrapper.util.DurationFormatter;
@@ -50,6 +51,8 @@ public class Leg implements Parcelable {
     }
 
     protected Leg(Parcel in) {
+        origin = in.readParcelable(OriginOrDestination.class.getClassLoader());
+        destination = in.readParcelable(OriginOrDestination.class.getClassLoader());
         type = in.readString();
         name = in.readString();
         direction = in.readString();
@@ -58,6 +61,8 @@ public class Leg implements Parcelable {
         dist = in.readInt();
         transportNumber = in.readInt();
         index = in.readInt();
+        product = in.readParcelable(Product.class.getClassLoader());
+        stopList = in.createTypedArrayList(Stop.CREATOR);
     }
 
     public static final Creator<Leg> CREATOR = new Creator<Leg>() {
@@ -179,7 +184,7 @@ public class Leg implements Parcelable {
     }
 
     /**
-     * Is walk?
+     * Is walk?l
      * @return return true if type is WALK
      */
     public boolean isWalk() {
@@ -201,6 +206,9 @@ public class Leg implements Parcelable {
         dest.writeInt(dist);
         dest.writeInt(transportNumber);
         dest.writeInt(index);
-        dest.writeArray(stopList.toArray());
+        dest.writeList(stopList);
+        dest.writeParcelable(origin, flags);
+        dest.writeParcelable(destination, flags);
+        dest.writeParcelable(product, flags);
     }
 }

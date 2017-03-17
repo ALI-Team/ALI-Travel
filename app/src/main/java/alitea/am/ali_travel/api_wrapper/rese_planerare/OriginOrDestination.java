@@ -1,5 +1,8 @@
 package alitea.am.ali_travel.api_wrapper.rese_planerare;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,7 +19,7 @@ import alitea.am.ali_travel.api_wrapper.util.DateJoiner;
  * Created by axel on 06/03/17.
  */
 
-public class OriginOrDestination {
+public class OriginOrDestination implements Parcelable {
     private String name, type, id, extId;
     private double lon, lat;
     private GregorianCalendar date;
@@ -37,6 +40,27 @@ public class OriginOrDestination {
             e.printStackTrace();
         }
     }
+
+    protected OriginOrDestination(Parcel in) {
+        name = in.readString();
+        type = in.readString();
+        id = in.readString();
+        extId = in.readString();
+        lon = in.readDouble();
+        lat = in.readDouble();
+    }
+
+    public static final Creator<OriginOrDestination> CREATOR = new Creator<OriginOrDestination>() {
+        @Override
+        public OriginOrDestination createFromParcel(Parcel in) {
+            return new OriginOrDestination(in);
+        }
+
+        @Override
+        public OriginOrDestination[] newArray(int size) {
+            return new OriginOrDestination[size];
+        }
+    };
 
     /**
      * Gets name
@@ -92,5 +116,21 @@ public class OriginOrDestination {
      */
     public GregorianCalendar getDate() {
         return date;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(type);
+        dest.writeString(id);
+        dest.writeString(extId);
+        dest.writeDouble(lon);
+        dest.writeDouble(lat);
+        dest.writeSerializable(date);
     }
 }

@@ -115,6 +115,6 @@ public class Trip implements Parcelable {
         dest.writeString(duration);
         dest.writeInt(index);
         dest.writeString(ctxRecon);
-        dest.writeArray(legList.toArray());
+        dest.writeList(legList);
     }
 }

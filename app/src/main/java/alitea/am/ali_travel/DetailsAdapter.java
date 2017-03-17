@@ -55,18 +55,18 @@ public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.ViewHold
 
         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
 
-        String orig = format.format(dataList.get(position).getLegList().get(0).getOrigin().getDate().getTime());
-        String dest = format.format(dataList.get(position).getLegList().get(dataList.get(position).getLegList().size()-1).getDestination().getDate().getTime());
+        String orig = format.format(dataList.getLegList().get(0).getOrigin().getDate().getTime());
+        String dest = format.format(dataList.getLegList().get(dataList.getLegList().size()-1).getDestination().getDate().getTime());
         test.setText(orig+" - "+dest);
 
         TextView est = holder.est;
-        est.setText(context.getString(R.string.estimated, dataList.get(position).getDuration()));
+        est.setText(context.getString(R.string.estimated, dataList.getDuration()));
 
         LinearLayout mos = (LinearLayout)holder.itemView.findViewById(R.id.mos_types);
 
-        for (Leg leg:dataList.get(position).getLegList()) {
+        for (Leg leg:dataList.getLegList()) {
 
-            if (dataList.get(position).getLegList().indexOf(leg) > 0) {
+            if (dataList.getLegList().indexOf(leg) > 0) {
                 ImageView icon = new ImageView(context);
                 icon.setImageResource(R.drawable.ic_arrow_forward_black_24dp);
                 mos.addView(icon);
@@ -133,7 +133,7 @@ public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return dataList.size();
+        return dataList.getLegList().size();
     }
 
     public void setContext(Context context) {

@@ -1,5 +1,8 @@
 package alitea.am.ali_travel.api_wrapper.rese_planerare;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -12,7 +15,7 @@ import alitea.am.ali_travel.api_wrapper.util.DateJoiner;
  * Created by axel on 09/03/17.
  */
 
-public class Stop {
+public class Stop implements Parcelable {
     private String name, id, extId;
     private int routeIdx;
     private double lon, lat;
@@ -26,8 +29,10 @@ public class Stop {
             this.routeIdx = stop.getInt("routeIdx");
             this.lon = stop.getDouble("lon");
             this.lat = stop.getDouble("lat");
-            this.arrival = DateJoiner.getCalendarFromDateTime(stop.getString("arrDate"),
-                    stop.getString("arrTime"));
+            if (stop.has("arrDate")) {
+                this.arrival = DateJoiner.getCalendarFromDateTime(stop.getString("arrDate"),
+                        stop.getString("arrTime"));
+            }
             if (stop.has("depDate")) {
                 this.departure = DateJoiner.getCalendarFromDateTime(stop.getString("depDate"),
                         stop.getString("depTime"));
@@ -38,6 +43,27 @@ public class Stop {
             e.printStackTrace();
         }
     }
+
+    protected Stop(Parcel in) {
+        name = in.readString();
+        id = in.readString();
+        extId = in.readString();
+        routeIdx = in.readInt();
+        lon = in.readDouble();
+        lat = in.readDouble();
+    }
+
+    public static final Creator<Stop> CREATOR = new Creator<Stop>() {
+        @Override
+        public Stop createFromParcel(Parcel in) {
+            return new Stop(in);
+        }
+
+        @Override
+        public Stop[] newArray(int size) {
+            return new Stop[size];
+        }
+    };
 
     /**
      * Gets name of stop
@@ -101,5 +127,22 @@ public class Stop {
      */
     public GregorianCalendar getDeparture() {
         return departure;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(id);
+        dest.writeString(extId);
+        dest.writeInt(routeIdx);
+        dest.writeDouble(lat);
+        dest.writeDouble(lon);
+        dest.writeSerializable(arrival);
+        dest.writeSerializable(departure);
     }
 }

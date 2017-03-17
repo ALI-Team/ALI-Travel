@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+
+import alitea.am.ali_travel.api_wrapper.rese_planerare.Trip;
 
 public class RouteDetailsActivity extends AppCompatActivity {
 
@@ -24,7 +27,11 @@ public class RouteDetailsActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        DetailsAdapter adapter = new DetailsAdapter(getIntent().);
+        Trip trip = getIntent().getParcelableExtra("trip");
+
+        Log.e("asd", "lkjafsd");
+
+        DetailsAdapter adapter = new DetailsAdapter(trip);
         recyclerView.setAdapter(adapter);
     }
 }

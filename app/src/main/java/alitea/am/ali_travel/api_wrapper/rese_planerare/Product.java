@@ -1,5 +1,8 @@
 package alitea.am.ali_travel.api_wrapper.rese_planerare;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -7,7 +10,7 @@ import org.json.JSONObject;
  * Created by axel on 09/03/17.
  */
 
-public class Product {
+public class Product implements Parcelable {
     private String name, catOutS, catOutL, operator, operatorUrl;
     private int num, catCode, operatorCode;
 
@@ -26,6 +29,29 @@ public class Product {
             e.printStackTrace();
         }
     }
+
+    protected Product(Parcel in) {
+        name = in.readString();
+        catOutS = in.readString();
+        catOutL = in.readString();
+        operator = in.readString();
+        operatorUrl = in.readString();
+        num = in.readInt();
+        catCode = in.readInt();
+        operatorCode = in.readInt();
+    }
+
+    public static final Creator<Product> CREATOR = new Creator<Product>() {
+        @Override
+        public Product createFromParcel(Parcel in) {
+            return new Product(in);
+        }
+
+        @Override
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
 
     /**
      * Gets name of company, ie "Öresundståg 1038"
@@ -89,5 +115,22 @@ public class Product {
      */
     public int getOperatorCode() {
         return operatorCode;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(catOutL);
+        dest.writeString(catOutS);
+        dest.writeString(operator);
+        dest.writeString(operatorUrl);
+        dest.writeInt(num);
+        dest.writeInt(catCode);
+        dest.writeInt(operatorCode);
     }
 }
