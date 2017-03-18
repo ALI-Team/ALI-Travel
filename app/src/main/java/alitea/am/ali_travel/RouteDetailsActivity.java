@@ -32,6 +32,7 @@ public class RouteDetailsActivity extends AppCompatActivity {
         Log.e("asd", "lkjafsd");
 
         DetailsAdapter adapter = new DetailsAdapter(trip);
+        adapter.setContext(this);
         recyclerView.setAdapter(adapter);
     }
 }

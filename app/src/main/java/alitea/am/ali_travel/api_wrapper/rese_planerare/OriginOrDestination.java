@@ -2,6 +2,7 @@ package alitea.am.ali_travel.api_wrapper.rese_planerare;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,6 +24,7 @@ public class OriginOrDestination implements Parcelable {
     private String name, type, id, extId;
     private double lon, lat;
     private GregorianCalendar date;
+    private static final String TAG = OriginOrDestination.class.getSimpleName();
 
     public OriginOrDestination(JSONObject originOrDestination) {
         try {
@@ -36,6 +38,7 @@ public class OriginOrDestination implements Parcelable {
             this.date = DateJoiner.getCalendarFromDateTime(originOrDestination.getString("date"),
                     originOrDestination.getString("time"));
 
+
         } catch (JSONException | ParseException e) {
             e.printStackTrace();
         }
@@ -48,6 +51,7 @@ public class OriginOrDestination implements Parcelable {
         extId = in.readString();
         lon = in.readDouble();
         lat = in.readDouble();
+        date = (GregorianCalendar) in.readSerializable();
     }
 
     public static final Creator<OriginOrDestination> CREATOR = new Creator<OriginOrDestination>() {

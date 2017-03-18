@@ -45,6 +45,19 @@ public class Trip implements Parcelable {
         legList = in.createTypedArrayList(Leg.CREATOR);
     }
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(duration);
+        dest.writeInt(index);
+        dest.writeString(ctxRecon);
+        dest.writeTypedList(legList);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     public static final Creator<Trip> CREATOR = new Creator<Trip>() {
         @Override
         public Trip createFromParcel(Parcel in) {
@@ -103,18 +116,5 @@ public class Trip implements Parcelable {
      */
     public ArrayList<Leg> getLegList() {
         return legList;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(duration);
-        dest.writeInt(index);
-        dest.writeString(ctxRecon);
-        dest.writeList(legList);
     }
 }

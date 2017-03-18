@@ -2,6 +2,7 @@ package alitea.am.ali_travel.api_wrapper.rese_planerare;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,6 +25,8 @@ public class Leg implements Parcelable {
     private int index;
     private Product product;
     private ArrayList<Stop> stopList;
+    private static final String TAG = Leg.class.getSimpleName();
+
     public Leg(JSONObject leg) {
         try {
             this.origin = new OriginOrDestination(leg.getJSONObject("Origin"));
@@ -63,6 +66,7 @@ public class Leg implements Parcelable {
         index = in.readInt();
         product = in.readParcelable(Product.class.getClassLoader());
         stopList = in.createTypedArrayList(Stop.CREATOR);
+        if(destination == null) Log.i(TAG, "FUCK");
     }
 
     public static final Creator<Leg> CREATOR = new Creator<Leg>() {
@@ -200,6 +204,7 @@ public class Leg implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeParcelable(origin, flags);
         dest.writeParcelable(destination, flags);
+        if(destination == null) Log.w(TAG, "FUCK from writeToParcel");
         dest.writeString(type);
         dest.writeString(name);
         dest.writeString(direction);

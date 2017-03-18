@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 import alitea.am.ali_travel.api_wrapper.rese_planerare.Leg;
 import alitea.am.ali_travel.api_wrapper.rese_planerare.Trip;
@@ -23,6 +24,7 @@ import alitea.am.ali_travel.api_wrapper.rese_planerare.Trip;
 public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.ViewHolder> {
     private Trip dataList;
     public Context context;
+    private static final String TAG = DetailsAdapter.class.getSimpleName();
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView test;
@@ -55,9 +57,17 @@ public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.ViewHold
 
         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
 
-        String orig = format.format(dataList.getLegList().get(0).getOrigin().getDate().getTime());
-        String dest = format.format(dataList.getLegList().get(dataList.getLegList().size()-1).getDestination().getDate().getTime());
-        test.setText(orig+" - "+dest);
+        ArrayList<Leg> legList = dataList.getLegList();
+
+        String orig = format.format(legList.get(0).getOrigin().getDate().getTime());
+
+        Leg lastLeg = legList.get(legList.size() - 1);
+        if (lastLeg != null && lastLeg.getDestination() != null && lastLeg.getDestination().getDate() != null) {
+            String dest = format.format(legList.get(legList.size() - 1).getDestination().getDate().getTime());
+            test.setText(orig + " - " + dest);
+        } else {
+            Log.w(TAG, "FUCK!");
+        }
 
         TextView est = holder.est;
         est.setText(context.getString(R.string.estimated, dataList.getDuration()));
